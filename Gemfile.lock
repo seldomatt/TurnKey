@@ -1,7 +1,16 @@
-GEM
+PATH
+  remote: .
   specs:
+    turnkey (0.0.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rake (10.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  rake
+  turnkey!
