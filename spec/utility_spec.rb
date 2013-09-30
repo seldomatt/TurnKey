@@ -54,12 +54,7 @@ describe "Utility" do
       NSUserDefaults.standardUserDefaults["not_implemented"] = write_data
       read_data = NSUserDefaults.standardUserDefaults["not_implemented"]
       read_not_implemented = NSKeyedUnarchiver.unarchiveObjectWithData(read_data)
-      read_not_implemented.should != nil
       read_not_implemented.foo.should == "foo"
     end
-
-
   end
-
-
 end
