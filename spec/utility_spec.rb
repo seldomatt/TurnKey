@@ -1,7 +1,8 @@
 describe "Utility" do
 
   before do
-    @song = Song.new.tap { |s|
+    class DummySong;attr_accessor :title, :album, :artist;end
+    @song = DummySong.new.tap { |s|
       s.title = "In Bloom"
       s.album = "Nevermind"
       s.artist = "Nirvana"
