@@ -9,7 +9,5 @@ module Turnkey
     def writer_sig_for(property)
       property.to_s.delete("@") + "="
     end
-
   end
-
 end
