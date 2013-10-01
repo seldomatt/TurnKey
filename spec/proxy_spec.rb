@@ -8,7 +8,7 @@ describe "Proxy" do
       NSKeyedArchiver.archivedDataWithRootObject(@song1)
       @song2 = Song.new.tap { |s| s.title = "Lounge Act"; s.album = "Nevermind"; s.artist = "Nirvana"}
       NSKeyedArchiver.archivedDataWithRootObject(@song2)
-      Song.vars.length.should == 3
+      Song.tk_vars.length.should == 3
     end
   end
 end
