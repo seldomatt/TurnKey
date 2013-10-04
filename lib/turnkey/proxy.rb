@@ -28,12 +28,22 @@ module Turnkey
     module ClassMethods
 
       def tk_vars=(vars)
-        @@vars ||= []
-        @@vars = @@vars | vars
+        class_variable_set(:@@vars, (memoized_class_var | vars))
       end
 
       def tk_vars
-        @@vars
+        class_variable_get(:@@vars)
+      end
+
+      private
+
+      def memoized_class_var
+        begin
+          class_var = class_variable_get(:@@vars)
+        rescue NameError
+          class_var = []
+        end
+        class_var
       end
     end
   end
