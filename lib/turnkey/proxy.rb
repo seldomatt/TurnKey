@@ -39,11 +39,11 @@ module Turnkey
 
       def memoized_class_var
         begin
-          class_var = class_variable_get(:@@vars)
+          class_variable_get(:@@vars)
         rescue NameError
-          class_var = []
+          $stderr.puts "Turnkey: Archiving instance of class #{self.name} for first time"
+          []
         end
-        class_var
       end
     end
   end

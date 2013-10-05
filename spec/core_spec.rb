@@ -1,16 +1,16 @@
 describe "Turnkey" do
 
-  describe "#archive" do
+  before do
+    class ToBeArchived;attr_accessor :name, :obj_ref;end
+    class OtherObject;attr_accessor :name;end
+    class ToBeArchived2;attr_accessor :name, :obj_ref;end
+    class OtherObject2;attr_accessor :name;end
+    @object_ref = OtherObject.new.tap{|o| o.name = "Referenced Object"}
+    @object_ref2 = OtherObject2.new.tap{|o| o.name = "Referenced Object"}
+    @to_be_archived = ToBeArchived.new.tap{|tba| tba.name = "Archived";tba.obj_ref = @object_ref}
+  end
 
-    before do
-      class ToBeArchived;attr_accessor :name, :obj_ref;end
-      class OtherObject;attr_accessor :name;end
-      class ToBeArchived2;attr_accessor :name, :obj_ref;end
-      class OtherObject2;attr_accessor :name;end
-      @object_ref = OtherObject.new.tap{|o| o.name = "Referenced Object"}
-      @object_ref2 = OtherObject2.new.tap{|o| o.name = "Referenced Object"}
-      @to_be_archived = ToBeArchived.new.tap{|tba| tba.name = "Archived";tba.obj_ref = @object_ref}
-    end
+  describe "#archive" do
 
     it "should take an instance and key and save object to NSUserDefaults under specified key" do
       Turnkey.archive(@to_be_archived, "Archived-Object-Key")
@@ -32,9 +32,16 @@ describe "Turnkey" do
       first_obj.name.should == "Foo"
       first_obj.obj_ref.class.should == OtherObject2
     end
-
   end
 
+  describe "#unarchive" do
 
-
+    it "should unarchive object when passed identifier key" do
+      Turnkey.archive(@to_be_archived, "TBA")
+      unarched = Turnkey.unarchive("TBA")
+      unarched.name.should == "Archived"
+      unarched.obj_ref.name.should == "Referenced Object"
+      unarched.class.should == ToBeArchived
+    end
+  end
 end

@@ -8,7 +8,12 @@ module Turnkey
     end
   end
 
-  module_function :archive
+  def unarchive(key)
+    data = user_defaults[key]
+    NSKeyedUnarchiver.unarchiveObjectWithData(data)
+  end
+
+  module_function :archive, :unarchive
 
   private
 
