@@ -6,6 +6,7 @@ module Turnkey
     else
       archive_instance(instance, key)
     end
+    true
   end
 
   def unarchive(key)

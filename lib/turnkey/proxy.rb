@@ -28,21 +28,15 @@ module Turnkey
     module ClassMethods
 
       def tk_vars=(vars)
-        class_variable_set(:@@vars, (memoized_class_var | vars))
+        instance_eval do
+          @@vars ||= []
+          @@vars = @@vars | vars
+        end
       end
 
       def tk_vars
-        class_variable_get(:@@vars)
-      end
-
-      private
-
-      def memoized_class_var
-        begin
-          class_variable_get(:@@vars)
-        rescue NameError
-          $stderr.puts "Turnkey: Archiving instance of class #{self.name} for first time"
-          []
+        instance_eval do
+          @@vars
         end
       end
     end
