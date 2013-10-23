@@ -1,4 +1,5 @@
 .repl_history
+pkg/*
 build
 tags
 app/pixate_code.rb
