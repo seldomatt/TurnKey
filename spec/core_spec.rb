@@ -1,4 +1,4 @@
-describe "Turnkey" do
+describe "Core" do
 
   before do
     class ToBeArchived;attr_accessor :name, :obj_ref;end

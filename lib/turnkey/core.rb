@@ -11,6 +11,12 @@ module Turnkey
 
   def unarchive(key)
     data = user_defaults[key]
+    archived_klasses = Cache.classes
+    archived_klasses.each do |klass|
+      klass.class_eval {
+        include Turnkey::Proxy
+      }
+    end
     NSKeyedUnarchiver.unarchiveObjectWithData(data)
   end
 
@@ -19,19 +25,15 @@ module Turnkey
   private
 
   def self.archive_instance(instance, key)
-    extend_protocols_to_obj_and_refs(instance)
+    Cache.update(instance)
+    Utility.defineProtocols(instance)
     archived_data = NSKeyedArchiver.archivedDataWithRootObject(instance)
     user_defaults[key] = archived_data
   end
 
   def self.archive_array(array, key)
-    array.each{|inst| extend_protocols_to_obj_and_refs(inst)}
+    array.each { |inst| Utility.defineProtocols(inst) }
     archive_instance(array, key)
-  end
-
-  def self.extend_protocols_to_obj_and_refs(instance)
-    Utility.defineProtocols(instance)
-    Utility.extend_protocols_to_object_references(instance)
   end
 
   def self.user_defaults

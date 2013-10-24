@@ -7,9 +7,9 @@ class AppDelegate
     song = Song.new.tap{|s| s.title = "In Bloom"; s.artist = "Nirvana"}
     p "Archiving song instance..."
     Turnkey.archive(song, "In Bloom")
-    # => returns true
-    #when you want to get this object out of the db, use Turnkey#unarchive, passing the key
-    #as an arg
+    ## => returns true
+    ##when you want to get this object out of the db, use Turnkey#unarchive, passing the key
+    ##as an arg
     p "Unarchiving song instance..."
     #Turnkey#unarchive returns a new instance with identical properties to the archived instance
     fetched_song = Turnkey.unarchive("In Bloom")
