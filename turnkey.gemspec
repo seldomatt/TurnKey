@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name        = "turnkey"
-  s.version     = '0.0.1'
+  s.version     = Turnkey::VERSION
   s.summary     = "RubyMotion utility for saving custom objects to disk"
   s.description = "TurnKey allows you to save custom objects to disk without implementing NSCoder protocols"
   s.author      = "Matthew Salerno"

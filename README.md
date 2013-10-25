@@ -40,7 +40,7 @@ To retrieve it, call `unarchive`
 Turnkey.unarchive("Nirvana Song")
 => #<Song:0x84b8ab0 @title="In Bloom" @artist="Nirvana">
 ```
-####Sets
+####Arrays/Hashes
 
 You can also pass Arrays or Hashes of objects to `archive`:
 
