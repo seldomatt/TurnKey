@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+require File.expand_path('../lib/turnkey/version', __FILE__)
+
 Gem::Specification.new do |s|
   s.name        = "turnkey"
   s.version     = Turnkey::VERSION
@@ -9,9 +11,8 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/seldomatt/turnkey"
   s.license     = "MIT"
 
-  files = []
-  files << 'README.md'
-  files << 'LICENSE'
-  files.concat(Dir.glob('lib/**/*.rb'))
-  s.files = files
+  s.files       = `git ls-files`.split("\n")
+  s.test_files  = `git ls-files -- spec/*`.split("\n")
+  s.require_paths = ["lib"]
+
 end
