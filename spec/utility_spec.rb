@@ -81,7 +81,7 @@ describe "Utility" do
       ref2.respondsToSelector("initWithCoder:").should == true
     end
 
-    it "#defrotocols should be extended recursively to all object references" do
+    it "#defineProtocols should be extended recursively to all object references" do
       class Parent;attr_accessor :ref;end
       class Child;attr_accessor :ref;end
       class GrandChild;attr_accessor :name;end

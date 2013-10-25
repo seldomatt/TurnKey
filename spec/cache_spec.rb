@@ -54,6 +54,19 @@ describe "Cache" do
       Turnkey::Cache.cache.should == {"Song" => ["@title","@artist"], "Artist" => ["@name"]}
     end
 
+    it "#update doesnt loop infinitely when two objects refer to each other" do
+      Turnkey::Cache.clear_cache
+      Turnkey::Cache.cache.empty?.should == true
+      class Artist;attr_accessor :name, :song;end
+      song = Song.new.tap{|s| s.title = "In Bloom"}
+      artist = Artist.new.tap{|a| a.name = "Nirvana";a.song = song}
+      song.artist = artist
+      Turnkey::Cache.update(song)
+      true.should == true
+      #recursion was setting up an infinite loop causing a crash. This spec is checking that the
+      #recursive 'update' call doesn't crash, hence the trivial true.should == true assertion
+    end
+
     it "#update accepts an array or a single instance" do
       Turnkey::Cache.clear_cache
       Turnkey::Cache.cache.empty?.should == true

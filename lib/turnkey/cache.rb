@@ -3,6 +3,8 @@ module Turnkey
   class Cache
     extend Turnkey::Sanitizers
 
+    @@objs ||= []
+
     CACHE_KEY = 'tk-cache'
 
     def self.cache
@@ -13,6 +15,9 @@ module Turnkey
       if instance_or_array.is_a?(Array)
         instance_or_array.each { |item| update(item) }
       else
+
+        @@objs << instance_or_array.object_id
+
         update_hash = {}
         update_hash[instance_or_array.class.to_s] = instance_or_array.instance_variables.map do |ivar|
           ivar.to_s
@@ -26,6 +31,7 @@ module Turnkey
     def self.update_references(instance)
       instance.instance_variables.each do |prop|
         value = instance.send(reader_sig_for(prop))
+        next if @@objs.include?(value.object_id)
         update(value)
       end
     end
