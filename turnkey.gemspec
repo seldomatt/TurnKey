@@ -10,11 +10,8 @@ Gem::Specification.new do |s|
   s.email       = "matthewsalern@gmail.com"
   s.homepage    = "https://github.com/seldomatt/turnkey"
   s.license     = "MIT"
-
-  s.files       = Dir.glob(File.join(File.dirname(__FILE__), "/lib/**/*.rb"))
+  s.files       = `git ls-files`.split("\n")
   s.test_files  = `git ls-files -- spec/*`.split("\n")
   s.require_paths = ["lib"]
-  p "!!!!!!!!!!! #{File.path(__FILE__)}"
-  p s.files
 
 end

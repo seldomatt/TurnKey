@@ -17,3 +17,4 @@ nbproject
 .idea
 .ruby-version
 .ruby-gemset
+*.gem
