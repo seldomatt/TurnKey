@@ -1,3 +1,5 @@
+![Turnkey](/tk-logo.png)
+
 turnkey
 =======
 
@@ -24,9 +26,9 @@ gem 'turnkey'
 ```
 
 ### Usage
-####Saving objects to disk
+####Saving objects to defaults
 
-To save a custom object to disk, just pass the object, along with the key you'll use to retrieve it, to Turnkey's `archive` method:
+To save a custom object to defaults, just pass the object, along with the key you'll use to retrieve it, to Turnkey's `archive` method:
 
 ```ruby
 song = Song.new.tap{|s| s.title = "In Bloom"; s.artist = "Nirvana"}
