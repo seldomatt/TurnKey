@@ -1,3 +1,4 @@
+motion_require "proxy"
 module Turnkey
 
   def archive(instance, key)
