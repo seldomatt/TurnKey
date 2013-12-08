@@ -1,3 +1,4 @@
+motion_require "sanitizers"
 module Turnkey
 
   module Proxy
