@@ -30,9 +30,11 @@ module Turnkey
 
     def self.update_references(instance)
       instance.instance_variables.each do |prop|
-        value = instance.send(reader_sig_for(prop))
-        next if @@objs.include?(value.object_id)
-        update(value)
+        if instance.respond_to?(reader_sig_for(prop))
+          value = instance.send(reader_sig_for(prop))
+          next if @@objs.include?(value.object_id)
+          update(value)
+        end
       end
     end
 

@@ -3,15 +3,13 @@ module Turnkey
   module Proxy
     include Turnkey::Sanitizers
 
-    #def self.included(base)
-    #  base.extend(ClassMethods)
-    #end
-
     def encodeWithCoder(encoder)
       #self.class.tk_vars = instance_variables
       instance_variables.each do |prop|
-        reader_sig = reader_sig_for(prop)
-        encoder.encodeObject(self.send(reader_sig), forKey: reader_sig)
+        if self.respond_to?(reader_sig_for(prop))
+          reader_sig = reader_sig_for(prop)
+          encoder.encodeObject(self.send(reader_sig), forKey: reader_sig)
+        end
       end
     end
 
@@ -20,25 +18,11 @@ module Turnkey
         property_list = Cache.attributesForClass(self.class)
         property_list.each do |prop|
           value = decoder.decodeObjectForKey(reader_sig_for(prop))
-          self.send(writer_sig_for(prop), value) if value
+          if self.respond_to?(writer_sig_for(prop)) && value
+            self.send(writer_sig_for(prop), value)
+          end
         end
       end
     end
-
-    #module ClassMethods
-    #
-    #  def tk_vars=(vars)
-    #    instance_eval do
-    #      @@vars ||= []
-    #      @@vars = @@vars | vars
-    #    end
-    #  end
-    #
-    #  def tk_vars
-    #    instance_eval do
-    #      @@vars
-    #    end
-    #  end
-    #end
   end
 end

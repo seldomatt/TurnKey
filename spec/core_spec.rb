@@ -5,9 +5,11 @@ describe "Core" do
     class OtherObject;attr_accessor :name;end
     class ToBeArchived2;attr_accessor :name, :obj_ref;end
     class OtherObject2;attr_accessor :name;end
+    class Adaptive; attr_accessor :name; def doSomething; @something = true; end; end
     @object_ref = OtherObject.new.tap{|o| o.name = "Referenced Object"}
     @object_ref2 = OtherObject2.new.tap{|o| o.name = "Referenced Object"}
     @to_be_archived = ToBeArchived.new.tap{|tba| tba.name = "Archived";tba.obj_ref = @object_ref}
+    @adaptive = Adaptive.new.tap{|tba| tba.name = "Archived"; tba.doSomething }
   end
 
   describe "#archive" do
@@ -42,6 +44,13 @@ describe "Core" do
       unarched.name.should == "Archived"
       unarched.obj_ref.name.should == "Referenced Object"
       unarched.class.should == ToBeArchived
+    end
+
+    it "should unarchive object when passed identifier key and handle instance variables that have no accessor methods" do
+      Turnkey.archive(@adaptive, "TBA1")
+      unarched = Turnkey.unarchive("TBA1")
+      unarched.name.should == "Archived"
+      unarched.class.should == Adaptive
     end
   end
 end

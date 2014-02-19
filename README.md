@@ -31,12 +31,18 @@ gem 'turnkey'
 To save a custom object to defaults, just pass the object, along with the key you'll use to retrieve it, to Turnkey's `archive` method:
 
 ```ruby
+class Song
+  attr_accessor :title, :artist
+end
+
 song = Song.new.tap{|s| s.title = "In Bloom"; s.artist = "Nirvana"}
 => #<Song:0x82b4ef0 @title="In Bloom" @artist="Nirvana">
 Turnkey.archive(song, "Nirvana Song")
 => true
 ```
 To retrieve it, call `unarchive`
+
+Note the system uses accessor methods to get and set the values when storing and recovering so be sure to use attr_accessors for the variable states you want to preserve. Internal instance variables without this are ignored.
 
 ```ruby
 Turnkey.unarchive("Nirvana Song")
