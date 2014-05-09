@@ -20,7 +20,7 @@ module Turnkey
         property_list = Cache.attributesForClass(self.class)
         property_list.each do |prop|
           value = decoder.decodeObjectForKey(reader_sig_for(prop))
-          self.send(writer_sig_for(prop), value) if value
+          self.send(writer_sig_for(prop), value) unless value.nil?
         end
       end
     end
